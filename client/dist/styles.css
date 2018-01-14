@@ -1,0 +1,174 @@
+body {
+  background-color: #dddddd;
+}
+
+h3 {
+  color: black;
+  background-color: #aaaaaa;
+  font-size:30px;
+  margin: 0;
+  padding: 10px 10px;  
+}
+.center {
+  width:1250px;
+  margin:0 auto;
+}
+
+.teamBannerContainer {
+  background-color:#243546;
+}
+
+.group {
+	display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    width:730px;
+    margin-top: 20px;
+}
+.item {
+	height: 55px;
+    width: 120px;
+    position: relative;
+}
+.categoryTitle {
+    color: #FFF;
+    font-size:15px;
+    font-weight:bold;
+}
+
+.teamStat {
+  font-size:30px;
+  color:white;
+}
+
+.record {
+  color: white;
+  font-size:35px;
+  padding-top:50px;
+  padding-left:15px;
+}
+
+.divider {
+    border-left:2px solid white;
+}
+
+.teamName {
+    color: white;
+    font-size:60px;
+    padding: 0;
+    margin: 0;
+    align-content: left;
+    align-items: left;
+    vertical-align:middle;
+}
+
+.button {
+ margin: 4;
+}
+
+.teamCity {
+    color: white;
+    font-size:30px;
+    padding-top: 40px;
+    margin: 0;
+}
+
+.logoName {
+    display: flex;
+    width:530px;
+    margin: 0 auto;
+}
+
+#appName {
+    color:white;
+    font-size:65px;
+    padding: 10px;
+    margin: 0;
+    text-align: center;
+}
+
+.container {
+    background-color:#243546;
+}
+
+#profilePic {
+   width: auto;
+   height: 230px;
+   display:inline-block;
+   background-image: url("paper.gif")
+}
+
+.profileData {
+    font-size: 15px;
+    color:white;
+    display:block;
+    text-align: left;
+    padding:5px;
+}
+
+.playerProfileContainer
+{
+    width:100%;
+    height: 275px;
+    background-color:#243546;
+}
+.square
+{
+    text-align:left;
+    display:inline-block; 
+    padding:20px;
+}
+
+.playerName {
+    color:white;
+    font-size: 42px;
+}
+
+.position {
+    color:white;
+    font-size: 23px;
+}
+
+.jerseyNumber {
+    color:white;
+    font-size: 19px;  
+    padding:5px; 
+}
+
+.buttonContainer {
+    background-color:#243546;
+    padding-bottom:10px;
+}
+
+.statGraphContainer
+{
+    text-align: center;
+    width:100%;
+    height: 500pt;
+}
+
+.box1 {
+    margin:1px;
+    width: 22%;
+    text-align:left;
+    float:left;  
+}
+
+.box2 {
+    margin:1px;
+    width: 70%;
+    text-align:left;
+    float: left;
+    margin-top:50px;
+}
+
+.trCatCol {
+    text-align: center;
+    font-weight: bold;
+    background-color: rgb(179, 179, 179);
+}
+
+.trStatCol {
+    text-align: center;
+    background-color: rgb(156, 156, 156); 
+}
