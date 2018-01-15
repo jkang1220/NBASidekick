@@ -24,6 +24,7 @@ app.get('/team', (req, res) => {
 
 app.get('/games', (req, res) => {
   let teamAbbreviation = req.query.teamAbbrev;
+  console.log('auth', authorization);
   axios.get(`https://api.mysportsfeeds.com/v1.1/pull/nba/2017-2018-regular/team_gamelogs.json?team=${teamAbbreviation}&sort=date`, authorization)
   .then(function(response) {
     res.send(response.data);
@@ -32,15 +33,6 @@ app.get('/games', (req, res) => {
   })
 });
 
-// app.get('/roster', (req, res) => {
-//   let teamAbbreviation = req.query.teamAbbrev;
-//   axios.get(`https://api.mysportsfeeds.com/v1.1/pull/nba/2017-2018-regular/roster_players.json?team=${teamAbbreviation}`, authorization)
-//   .then(function(response) {
-//     res.send(response.data);
-//   }).catch(function(err){
-//     console.log(err);
-//   })
-// });
 app.get('/roster', (req, res) => {
   let teamAbbreviation = req.query.teamAbbrev;
   axios.get(`https://api.mysportsfeeds.com/v1.1/pull/nba/2017-2018-regular/active_players.json?team=${teamAbbreviation}`, authorization)
@@ -83,12 +75,11 @@ app.get('/player', function (req,res) {
 app.get('/player', function (req,res) {
   let playerID = req.query.playerID
   axios.get(`https://api.mysportsfeeds.com/v1.1/pull/nba/2017-2018-regular/active_players.json?player=${playerID}`, authorization).then((response) => {
-    console.log('serverresponsevvvv', response.data);
     res.send(response.data);
   });
 });
 
-let port = 1128;
+let port = process.env.PORT || 1128;
 
 app.listen(port, function() {
   console.log(`listening on port ${port}`);
