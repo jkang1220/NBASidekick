@@ -22,11 +22,18 @@ const style = {
     margin: 8,
   };  
 
+const convertBROtoBRK = (abbrev) => {
+  if (abbrev === 'BRO') {
+    return 'BRK'
+  }
+  return abbrev;
+}
+
 const PlayerBioBox = (props) => (
     <div>
       <div className="playerProfileContainer">
         <div className="square">
-          <img style={{width: 'auto', height: '230px', display:'inline-block', backgroundWhite: 'white', background: `white url(http://i.cdn.turner.com/nba/nba/assets/logos/teams/secondary/web/${props.teamName}.svg) no-repeat top left`}} src ={props.player.officialImageSrc} />
+          <img style={{width: 'auto', height: '230px', display:'inline-block', backgroundWhite: 'white', background: `white url(http://i.cdn.turner.com/nba/nba/assets/logos/teams/secondary/web/${convertBROtoBRK(props.teamName)}.svg) no-repeat top left`}} src ={props.player.officialImageSrc} />
         </div>
         <div className="square">
           <div className = "playerName"><b>{(props.playerSeasonStats.length > 0) ? `${props.playerSeasonStats[0].player.FirstName} ${props.playerSeasonStats[0].player.LastName}` : ''}</b></div>
