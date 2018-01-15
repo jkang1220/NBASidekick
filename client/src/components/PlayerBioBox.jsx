@@ -24,7 +24,7 @@ const style = {
 
 const convertBROtoBRK = (abbrev) => {
   if (abbrev === 'BRO') {
-    return 'BRK'
+    return 'BKN'
   }
   return abbrev;
 }
