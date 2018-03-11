@@ -22,17 +22,20 @@ import {
 	CardText,
 } from 'material-ui/Card';
 import Toggle from 'material-ui/Toggle';
-import MenuItem from 'material-ui/MenuItem';
 import Divider from 'material-ui/Divider';
 import TextField from 'material-ui/TextField';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 import orderBy from 'lodash/orderBy';
-
 
 const filterFields = {
 	margin: '0px 10px',
 	width: '210px',
 };
 
+const selectFieldStyle = {
+	margin: '10px',
+};
 const spdPaperStyle = {
 	height: '90%',
 	width: '100%',
@@ -82,15 +85,16 @@ class AllPlayersDisplay extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			allTeams: [],
 			allPlayers: [],
 			filteredPlayers: [],
 			expandFilters: false,
-			TEAM: '',
+			TEAM: [0, 'Any Team'],
 			FIRST: '',
 			LAST: '',
 			GP: '',
 			NUM: '',
-			POS: '',
+			POS: [0, 'All'],
 			'MIN/G': '',
 			'PTS/G': '',
 			'2PA/G': '',
@@ -112,41 +116,58 @@ class AllPlayersDisplay extends React.Component {
 		this.onFilterParameterChange = this.onFilterParameterChange.bind(this);
 		this.handleRemoveFilters = this.handleRemoveFilters.bind(this);
 		this.handleToggle = this.handleToggle.bind(this);
+		this.onTeamSelectFieldChange = this.onTeamSelectFieldChange.bind(this);
+		this.onPositionSelectFieldChange = this.onPositionSelectFieldChange.bind(this);
+		this.handleApplyFilters = this.handleApplyFilters.bind(this);
 	}
 
 	componentWillMount() {
 		axios
 			.get('/allplayers')
 			.then(response => {
-				this.setState({allPlayers: response.data},
-					() => {
-						this.setState({
-							filteredPlayers: this.state.allPlayers.slice(0, 100),
-						});
-					}
-				);
+				this.setState({ allPlayers: response.data }, () => {
+					this.setState({
+						filteredPlayers: this.state.allPlayers.slice(0, 100),
+					});
+				});
 			})
 			.catch(function(error) {
 				console.log('error fetching all player data', error);
 			});
+
+		axios.get('/teams').then(response => {
+			console.log(JSON.stringify(response.data));
+			this.setState({ allTeams: response.data });
+		});
 	}
 
 	onFilterParameterChange(event) {
-		this.setState({ [event.target.name]: event.target.value });
+		this.setState({[event.target.name]: event.target.value});
+	}
+
+	onTeamSelectFieldChange(event, index, value) {
+		this.setState({TEAM:[value, event.target.innerText]});
+	}
+
+	onPositionSelectFieldChange(event, index, value) {
+		console.log(event.target, index, value);
+		this.setState({POS:[value, event.target.innerText]});
 	}
 
 	handleToggle(event, toggle) {
-		this.setState({ expandFilters: toggle });
+		this.setState({expandFilters: toggle });
 	}
+
+	handleApplyFilters() {}
 
 	handleRemoveFilters() {
 		this.setState({
 			filteredPlayers: this.state.allPlayers.slice(0, 100),
-			TEAM: '',
+			TEAM: [0, 'Any Team'],
 			FIRST: '',
 			LAST: '',
 			NUM: '',
-			POS: '',
+			POS: [0, 'All'],
 			GP: '',
 			'MIN/G': '',
 			'PTS/G': '',
@@ -192,17 +213,38 @@ class AllPlayersDisplay extends React.Component {
 							</CardText>
 							<CardText expandable={true}>
 								<div>
-									<h4>Team Stats</h4>
 									<div>
-										<TextField
+									<h4>Team</h4>
+										<SelectField
 											name="TEAM"
-											value={this.state['TEAM']}
-											onChange={this.onFilterParameterChange}
-											hintText="Example: BOS"
-											floatingLabelText="Team Name"
-											floatingLabelFixed={true}
-											style={filterFields}
-										/>
+											floatingLabelText="Team"
+											value={this.state['TEAM'][0]}
+											style={selectFieldStyle}
+											onChange={this.onTeamSelectFieldChange}
+										>
+											<MenuItem value={0} primaryText="Any Team" />
+											{this.state.allTeams.map((team, i) =>
+												<MenuItem
+													value={i + 1}
+													primaryText={team.abbreviation}
+												/>
+											)}
+										</SelectField>
+										<SelectField
+											name="POS"
+											floatingLabelText="Position"
+											value={this.state['POS'][0]}
+											style={selectFieldStyle}
+											onChange={this.onPositionSelectFieldChange}
+										>
+											<MenuItem value={0} primaryText="All" />
+											{['PG', 'SG', 'SF', 'PF', 'C'].map((position, i) =>
+												<MenuItem value={i + 1} primaryText={position} />
+											)}
+										</SelectField>
+									</div>
+									<div>
+									<h4>Player Info</h4>
 										<TextField
 											name="FIRST"
 											value={this.state['FIRST']}
@@ -230,20 +272,11 @@ class AllPlayersDisplay extends React.Component {
 											floatingLabelFixed={true}
 											style={filterFields}
 										/>
-										<TextField
-											name="POS"
-											value={this.state['POS']}
-											onChange={this.onFilterParameterChange}
-											hintText="Example: = PG"
-											floatingLabelText="Position"
-											floatingLabelFixed={true}
-											style={filterFields}
-										/>
 									</div>
 								</div>
 								<div>
-									<h4>General</h4>
 									<div>
+									<h4>Basic Stats</h4>
 										<TextField
 											name="PTS/G"
 											value={this.state['PTS/G']}
@@ -292,8 +325,8 @@ class AllPlayersDisplay extends React.Component {
 									</div>
 								</div>
 								<div>
-									<h4>Field Goals</h4>
 									<div>
+									<h4>Field Goals</h4>
 										<TextField
 											name="2PA/G"
 											value={this.state['2PA/G']}
@@ -381,8 +414,8 @@ class AllPlayersDisplay extends React.Component {
 									/>
 								</div>
 								<div>
-									<h4>Miscellaneous</h4>
 									<div>
+									<h4>Miscellaneous</h4>
 										<TextField
 											name="GP"
 											value={this.state['GP']}
@@ -426,6 +459,7 @@ class AllPlayersDisplay extends React.Component {
 										style={{ width: '200px', margin: '15px 0' }}
 										label="Apply Filters"
 										primary={true}
+										onClick={this.handleApplyFilters}
 									/>
 									<RaisedButton
 										style={{ width: '200px', margin: '15px 15px' }}
@@ -438,7 +472,10 @@ class AllPlayersDisplay extends React.Component {
 						</Card>
 					</div>
 
-					<PlayersTable allPlayers={this.state.allPlayers} filteredPlayers={this.state.filteredPlayers}/>
+					<PlayersTable
+						allPlayers={this.state.allPlayers}
+						filteredPlayers={this.state.filteredPlayers}
+					/>
 				</Paper>
 			</div>
 		);
