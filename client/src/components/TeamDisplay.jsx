@@ -30,13 +30,17 @@ const styles = {
 
 
 const teamDisplayPaperStyle = {
-  height: 900,
-  width: 1200,
-  pardding: 10,
+  height: '90%',
+  width: '90%',
+  padding: 10,
   background: 'white',
   textAlign: 'center',
   display: 'inline-block',
 };
+
+const directButton = {
+	margin: '20px'
+}
 
 class TeamDisplay extends React.Component{
   constructor(props) {
@@ -67,7 +71,6 @@ class TeamDisplay extends React.Component{
   getTeamRoster() { 
     axios.get('/roster', {params: {teamAbbrev: this.props.match.params.teamName}})
     .then((response) => {
-      console.log(response.data.activeplayers.playerentry);
       let sortedPlayersWithImages = response.data.activeplayers.playerentry
         .filter((player) => player.player.officialImageSrc !== null && player.player.JerseyNumber)
         .sort((a, b) => a.player.LastName - b.player.LastName);
@@ -113,7 +116,7 @@ class TeamDisplay extends React.Component{
 
   render() {
     return (
-      <div className ='center'>
+      <div>
         <Paper style={teamDisplayPaperStyle} zDepth={2}>
           <div className = "teamDisplayContainer">
           <div className = "teamBannerContainer" >
@@ -160,7 +163,7 @@ class TeamDisplay extends React.Component{
               <div className="teamStat">{(this.state.allPastGames.length > 0) ? this.calculateStreak(this.state.allPastGames): ''}</div>  
             </div>
             </div>
-            <RaisedButton label="Change Teams" style={style} containerElement={<Link to='/'></Link>}/>
+            <RaisedButton style={directButton} label="Change Teams" style={style} containerElement={<Link to='/'></Link>}/>
           </div>
           
           <h3>2017-2018 Roster</h3>

@@ -1,6 +1,12 @@
 module.exports = {
   auth: {
-    username: process.env.api_username,
-    password: process.env.api_password
+    username: '.....',
+    password: '.....'
+  },
+  database: {
+    host     : 'localhost',
+    user     : 'root',
+    password : '',
+    database : 'nbasidekick'
   }
 }

@@ -6,6 +6,7 @@ import TeamSelection from './components/TeamSelection.jsx';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TeamDisplay from './components/TeamDisplay.jsx';
 import SinglePlayerDisplay from './components/SinglePlayerDisplay.jsx';
+import AllPlayersDisplay from './components/AllPlayersDisplay.jsx';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 
@@ -19,6 +20,7 @@ class App extends React.Component {
     return (
       <Switch>
         <Route exact path="/" component={TeamSelection}/>
+        <Route exact path ="/players" component={AllPlayersDisplay}/>
         <Route exact path="/:teamName" component={TeamDisplay}/>
         <Route exact path="/:teamName/:playerID" component={SinglePlayerDisplay}/>
       </Switch>

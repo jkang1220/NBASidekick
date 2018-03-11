@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import {GridList, GridTile} from 'material-ui/GridList';
+import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
 
 const styles = {
@@ -25,6 +26,10 @@ const paperStyle = {
   textAlign: 'center',
   display: 'inline-block',
 };
+
+const directButton = {
+	margin: '20px'
+}
 
 class TeamSelection extends React.Component {
   constructor(props) {
@@ -50,6 +55,7 @@ class TeamSelection extends React.Component {
       <Paper style={paperStyle} zDepth={2}>
       <div className = 'container'>
         <h1 id = "appName">NBA Sidekick</h1>
+        <RaisedButton style={directButton} label="View All Players" containerElement={<Link to='/players'></Link>}/>
       </div>
       <div style={styles.root}>
         <GridList

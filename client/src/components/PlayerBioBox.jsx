@@ -29,6 +29,12 @@ const convertBROtoBRK = (abbrev) => {
   return abbrev;
 }
 
+
+const directButton = {
+	margin: '20px'
+}
+
+
 const PlayerBioBox = (props) => (
     <div>
       <div className="playerProfileContainer">
@@ -47,7 +53,7 @@ const PlayerBioBox = (props) => (
         </div>
       </div>
       <div className ="buttonContainer">
-        <RaisedButton label="Return to Team" style={{style}} containerElement={<Link to={`/${props.teamName}`}></Link>}/>
+        <RaisedButton style= {directButton} label="Return to Team" style={{style}} containerElement={<Link to={`/${props.teamName}`}></Link>}/>
       </div>
     </div>)
 
