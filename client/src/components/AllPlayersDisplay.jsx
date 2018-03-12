@@ -81,6 +81,35 @@ const numberWithCommas = num => {
 	return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
+const convertQueryIntoFilters = (filteredDataArr, query, stat) => {
+	if (query === '') {
+		return filteredDataArr;
+	}
+	if (query.indexOf('between') >= 0) {
+		var elements = query.split(' ');
+		var num1 = elements[1];
+		var num2 = elements[3];
+		var min = Math.min(num1, num2);
+		var max = Math.max(num1, num2);
+		return filteredDataArr.filter(
+			player => player[stat] >= min && player[stat] <= max
+		);
+	} else {
+		var noSpaces = query.replace(/\s/g, '');
+
+		for (var i = 0; i < noSpaces.length; i++) {
+			if (noSpaces[i] === '<' || noSpaces[i] === '>') {
+				var operator = noSpaces[i];
+			}
+		}
+
+		var number = noSpaces.split(operator)[1];
+		return operator === '<'
+			? filteredDataArr.filter(player => player[stat] < number)
+			: filteredDataArr.filter(player => player[stat] > number);
+	}
+}
+
 class AllPlayersDisplay extends React.Component {
 	constructor(props) {
 		super(props);
@@ -136,7 +165,6 @@ class AllPlayersDisplay extends React.Component {
 			});
 
 		axios.get('/teams').then(response => {
-			console.log(JSON.stringify(response.data));
 			this.setState({ allTeams: response.data });
 		});
 	}
@@ -150,7 +178,6 @@ class AllPlayersDisplay extends React.Component {
 	}
 
 	onPositionSelectFieldChange(event, index, value) {
-		console.log(event.target, index, value);
 		this.setState({POS:[value, event.target.innerText]});
 	}
 
@@ -158,7 +185,50 @@ class AllPlayersDisplay extends React.Component {
 		this.setState({expandFilters: toggle });
 	}
 
-	handleApplyFilters() {}
+	handleApplyFilters() {
+		var filteredPlayers = this.state.allPlayers
+		if (this.state.TEAM[0] > 0) {
+			let teamAbbrev = this.state.TEAM[1];
+			 filteredPlayers = this.state.allPlayers.filter(player => (player.TEAM === teamAbbrev))
+		}
+		if (this.state.POS[0] > 0) {
+			let position = this.state.POS[1];
+			filteredPlayers = filteredPlayers.filter(player => (player.POS === position))
+		}
+		if (this.state.FIRST.length > 0) {
+			let firstname = this.state.FIRST;
+			filteredPlayers = filteredPlayers.filter(player => player.FN.toLowerCase().includes(firstname.toLowerCase()))
+		}
+		if (this.state.LAST.length > 0) {
+			let lastname = this.state.LAST;
+			filteredPlayers = filteredPlayers.filter(player => player.LN.toLowerCase().includes(lastname.toLowerCase()))
+		}
+
+			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state.GP, 'GP');
+			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state.NUM, 'NUM');
+			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state['MIN/G'], 'MIN/G');
+			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state['PTS/G'], 'PTS/G');
+			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state['2PA/G'], '2PA/G');
+			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state['2PM/G'], '2PM/G');
+			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state['2PT%'], '2PT%');
+			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state['3PA/G'], '3PA/G');
+			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state['3PM/G'], '3PM/G');
+			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state['3PT%'], '3PT%');
+			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state['FTA/G'], 'FTA/G');
+			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state['FTM/G'], 'FTM/G');
+			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state['FT%'], 'FT%');
+			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state['REB/G'], 'REB/G');
+			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state['AST/G'], 'AST/G');
+			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state['STL/G'], 'STL/G');
+			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state['BLK/G'], 'BLK/G');
+			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state['TO/G'], 'TO/G');
+			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state['SLRY'], 'SLRY');
+			if(filteredPlayers.length > 0) {
+				this.setState({filteredPlayers:filteredPlayers})
+			}else{
+        this.setState({filteredPlayers: 'No Results'})
+			}
+	}
 
 	handleRemoveFilters() {
 		this.setState({

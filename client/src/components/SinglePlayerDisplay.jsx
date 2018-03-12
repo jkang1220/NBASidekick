@@ -79,11 +79,11 @@ class SinglePlayerDisplay extends React.Component {
 
     if (statName === 'MinsPerGame') {
       var statName = 'MinsPerGame';
-      var statY_values = last10games.map((game) => {
+      var statY_values = last10games.map((game, i) => {
         return Math.round((game.stats[statName]['#text']*10/60)/10);
       });
     } else {
-      var statY_values = last10games.map((game) => {
+      var statY_values = last10games.map((game, i) => {
         return game.stats[statName]['#text'];
       });
     }
@@ -113,7 +113,7 @@ class SinglePlayerDisplay extends React.Component {
     }
     statY_values.unshift(yLabel + '')
 
-    var gameDetails = last10games.map((game) => {
+    var gameDetails = last10games.map((game, i) => {
       if (game.game.homeTeam.Abbreviation !== this.props.match.params.teamName) {
         var X_value = `@ ${game.game.homeTeam.Abbreviation} ${game.game.date}`;
       } else {

@@ -86,6 +86,7 @@ class PlayersTable extends React.Component {
 			filteredPlayers: this.props.filteredPlayers,
 			columnToSort: '',
 			sortDirection: 'asc',
+			initialRender: true
 		};
 		this.filterTable = this.filterTable.bind(this);
 	}
@@ -165,29 +166,11 @@ class PlayersTable extends React.Component {
 					});
 				}
 			);
-			
-			// this.setState(
-			// 	{
-			// 		columnToSort: category,
-			// 		sortDirection: this.state.columnToSort === category
-			// 			? invertDirection[this.state.sortDirection]
-			// 			: 'desc',
-			// 	},
-			// 	() => {
-			// 		this.setState({
-			// 			filteredPlayers: orderBy(
-			// 				this.state.filteredPlayers,
-			// 				this.state.columnToSort,
-			// 				this.state.sortDirection
-			// 			),
-			// 		});
-			// 	}
-			// );
 		}
 	}
 
 	render() {
-		if (this.props.filteredPlayers && this.props.filteredPlayers.length > 0) {
+		if (this.props.filteredPlayers && this.props.filteredPlayers.length > 0 && this.props.filteredPlayers !== 'No Results') {
 			return (
 				<div>
 					<Table
@@ -610,6 +593,8 @@ class PlayersTable extends React.Component {
 					</Table>
 				</div>
 			);
+		} else if (this.props.filteredPlayers === 'No Results') {
+      return (<h3>No Players Found, Please update your filter parameters and select Apply Filters again</h3>)
 		} else {
 			return (
 				<Paper style={spdPaperStyle}>

@@ -93,7 +93,7 @@ app.get('/allplayers', function (req,res) {
         '3PM/G': parseFloat(player.stats.Fg3PtMadePerGame['#text']) || 0,
         '3PT%': parseFloat(player.stats.Fg3PtPct['#text']) || 0,
         'FTA/G': parseFloat(player.stats.FtAttPerGame['#text']) || 0,
-        'FTM/G': parseFloat(player.stats.FtMade['#text']) || 0,
+        'FTM/G': parseFloat(((player.stats.FtMade['#text']/player.stats.GamesPlayed['#text']).toFixed(2))) || 0,
         'FT%': parseFloat(player.stats.FtPct['#text']) || 0,
         'REB/G': parseFloat(player.stats.RebPerGame['#text']) || 0,
         'AST/G': parseFloat(player.stats.AstPerGame['#text']) || 0,
