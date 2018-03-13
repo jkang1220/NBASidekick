@@ -627,7 +627,7 @@ class AllPlayersDisplay extends React.Component {
 										name="TO/G"
 										value={this.state['TO/G']}
 										onChange={this.onFilterParameterChange}
-										hintText="Example: between 0 < 2"
+										hintText="Example: between 0 and 2"
 										floatingLabelText="Turnovers Per Game"
 										floatingLabelFixed={true}
 										style={filterFields}
