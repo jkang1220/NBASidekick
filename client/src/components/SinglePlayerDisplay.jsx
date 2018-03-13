@@ -96,7 +96,7 @@ class SinglePlayerDisplay extends React.Component {
 		var yLabel;
 
 		if (statName === 'MinsPerGame' || statName === 'MinSecondsPerGame') {
-			var statName = 'MinsPerGame';
+			// var statName = 'MinsPerGame';
 			var statY_values = last15games.map((game, i) => {
 				return Math.round(game.stats[statName]['#text'] * 10 / 60 / 10);
 			});
