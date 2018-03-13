@@ -400,7 +400,7 @@ class AllPlayersDisplay extends React.Component {
 											<i>
 												*Note: Search Results will only show up to 50 players.
 												By
-												Default it will show the top 50 players in desc Points
+												default it will show the top 50 players in desc Points
 												Per
 												Game
 											</i>
@@ -492,7 +492,7 @@ class AllPlayersDisplay extends React.Component {
 										name="AST/G"
 										value={this.state['AST/G']}
 										onChange={this.onFilterParameterChange}
-										hintText="Example: > 6.8"
+										hintText="Example: between 3.3 and 4.4"
 										floatingLabelText="Assists Per Game"
 										floatingLabelFixed={true}
 										style={filterFields}
@@ -542,7 +542,7 @@ class AllPlayersDisplay extends React.Component {
 										name="3PA/G"
 										value={this.state['3PA/G']}
 										onChange={this.onFilterParameterChange}
-										hintText="Example: > 4"
+										hintText="Example: between 3 and 6"
 										floatingLabelText="3 Pt Att Per Game"
 										floatingLabelFixed={true}
 										style={filterFields}
@@ -640,7 +640,7 @@ class AllPlayersDisplay extends React.Component {
 										name="SLRY"
 										value={this.state['SLRY']}
 										onChange={this.onFilterParameterChange}
-										hintText="Example: < 10000000"
+										hintText="Example: between 3000000 and 5000000"
 										floatingLabelText="Salary Per Year"
 										floatingLabelFixed={true}
 										style={filterFields}

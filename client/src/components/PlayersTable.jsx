@@ -108,7 +108,6 @@ class PlayersTable extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		console.log('nextProps', nextProps);
 		this.setState({filteredPlayers: nextProps.filteredPlayers})
 	}
 
@@ -198,11 +197,7 @@ class PlayersTable extends React.Component {
 			open: true,
 			filteredPlayers: this.props.filteredPlayers,
 			selectedPlayer: this.props.filteredPlayers[index]
-		},
-			() => {
-				console.log('state after row selection', this.state);
-			}
-		);
+		});
 	}
 
 	handleClose() {
