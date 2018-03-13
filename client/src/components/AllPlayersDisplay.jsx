@@ -370,39 +370,24 @@ class AllPlayersDisplay extends React.Component {
 							<div>
 								<div>
 									<h1>Quick Filter Guide</h1>
-									<p style={{ fontSize: '15px' }}>
+									<p style={{ fontSize: '18px' }}>
 										<b>
-											1. First Name and Last Name fields will retrieve names
-											that contain the characters you entered.
+											All fields except First Name, Last Name, and  can accept 3 types of input:
 										</b>
 										<br />
-										<b>
-											2. All other numeric fields can accept 3 types of input:
-										</b>
+										<span style={{ fontSize: '15px' }}><b><i>"&gt; 8"</i></b> - Returns all players that have the stat value
+										greater than 8</span>
 										<br />
-										"&gt; 8" - Returns all players that have the stat value
-										greater than 8
+										<span style={{ fontSize: '15px' }}><b><i>"&lt; 8"</i></b> - Returns all players that have the stat value less
+										than 8</span>
 										<br />
-										"&lt; 8" - Returns all players that have the stat value less
-										than 8
-										<br />
-										"between 7 and 9" - This will return all players that have
+										"between 7 and 9" - Return all players that have
 										the stat value between 7 and 9 inclusively
 										<br />
 										<b>
-											3. Search Results will only show up to 50 players. By
+											*Note: Search Results will only show up to 50 players. By
 											Default it will show the top 50 players in desc Points Per
 											Game
-										</b>
-										<br />
-										<b>
-											4. Clicking on a column header will sort the player
-											records in ascending/descending order
-										</b>
-										<br />
-										<b>
-											5. Clicking a player row will show a modal with the Single
-											Player Display
 										</b>
 									</p>
 									<h3>Team</h3>
@@ -599,7 +584,7 @@ class AllPlayersDisplay extends React.Component {
 									name="FT%"
 									value={this.state['FT%']}
 									onChange={this.onFilterParameterChange}
-									hintText="Example: > 80"
+									hintText="Example: between 80 and 90"
 									floatingLabelText="FT %"
 									floatingLabelFixed={true}
 									style={filterFields}
