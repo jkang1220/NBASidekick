@@ -158,7 +158,7 @@ class AllPlayersDisplay extends React.Component {
 			.then(response => {
 				this.setState({ allPlayers: response.data }, () => {
 					this.setState({
-						filteredPlayers: this.state.allPlayers.slice(0,100),
+						filteredPlayers: this.state.allPlayers.slice(0,50),
 					});
 				});
 			})
@@ -287,15 +287,19 @@ class AllPlayersDisplay extends React.Component {
 								<div>
 									<div>
 										<h1>Quick Filter Guide</h1>
-										<p style={{fontSize:'15px'}}><b>1. First Name and Last Name fields will find names with that include the characters you entered.</b>
+										<p style={{fontSize:'15px'}}><b>1. First Name and Last Name fields will retrieve names that contain the characters you entered.</b>
 										<br />
 										<b>2. All other numeric fields can accept 3 types of input:</b>
 										<br />
-											"&gt; 8"   - This will return all players that have the stat value greater than 8
+											"&gt; 8"   - Returns all players that have the stat value greater than 8
 											<br />
-											"&lt; 8"   - This will return all players that have the stat value less than 8
+											"&lt; 8"   - Returns all players that have the stat value less than 8
 											<br />
 											"between 7 and 9" - This will return all players that have the stat value between 7 and 9 inclusively
+											<br />
+											<b>3. Search Results will only show up to 50 players. By Default it will show the top 50 players in desc Points Per Game</b>
+											<b>4. Clicking on a column header will sort the player records in ascending/descending order</b>
+											<b>5. Clicking a player row will show a modal with the Single Player Display</b>
 										</p>
 									<h3>Team</h3>
 										<SelectField
