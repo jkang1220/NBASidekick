@@ -627,7 +627,7 @@ class AllPlayersDisplay extends React.Component {
 										name="TO/G"
 										value={this.state['TO/G']}
 										onChange={this.onFilterParameterChange}
-										hintText="Example: < 4"
+										hintText="Example: between 0 < 2"
 										floatingLabelText="Turnovers Per Game"
 										floatingLabelFixed={true}
 										style={filterFields}
@@ -636,7 +636,7 @@ class AllPlayersDisplay extends React.Component {
 										name="SLRY"
 										value={this.state['SLRY']}
 										onChange={this.onFilterParameterChange}
-										hintText="Example: between 3000000 and 5000000"
+										hintText="Example: < 6000000"
 										floatingLabelText="Salary Per Year"
 										floatingLabelFixed={true}
 										style={filterFields}
