@@ -22,7 +22,7 @@ const styles = {
   },
   gridList: {
     width: 1400,
-    height: 550,
+    height: 700,
     padding: 10,
     overflowY: 'auto'
   },
@@ -33,9 +33,11 @@ const teamDisplayPaperStyle = {
   height: '90%',
   width: '90%',
   padding: 10,
+  marginLeft : 'auto',
+	marginRight :'auto',
   background: 'white',
   textAlign: 'center',
-  display: 'inline-block',
+  display: 'block',
 };
 
 const directButton = {
@@ -127,11 +129,6 @@ class TeamDisplay extends React.Component{
               <h2 className = "teamName"> {`${this.state.selectedTeam.teamname}`}</h2>
             </div>
           </div>
-          
-          {/* <div className = 'record'>
-              {(this.state.overallSeasonStats.stats) ? `${this.state.overallSeasonStats.stats.Wins['#text']} - ${this.state.overallSeasonStats.stats.Losses['#text']}` : ''}
-            </div> */}
-
           <div className="group">
           <div className="item">
               <span className="categoryTitle">RECORD</span>
@@ -166,7 +163,7 @@ class TeamDisplay extends React.Component{
             <RaisedButton style={directButton} label="Change Teams" style={style} containerElement={<Link to='/'></Link>}/>
           </div>
           
-          <h3>2017-2018 Roster</h3>
+          <h3 className="seasonHeader">2017-2018 Roster</h3>
           <div style={styles.root}>
           <GridList
             cellHeight={180}

@@ -53,7 +53,7 @@ const PlayerBioBox = (props) => (
         </div>
       </div>
       <div className ="buttonContainer">
-        <RaisedButton style= {directButton} label="Return to Team" style={{style}} containerElement={<Link to={`/${props.teamName}`}></Link>}/>
+        { props.showReturnTeamButton ? <RaisedButton style= {directButton} label="Return to Team" style={{style}} containerElement={<Link to={`/${props.teamName}`}></Link>}/> : ''}
       </div>
     </div>)
 

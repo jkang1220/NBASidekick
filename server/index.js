@@ -73,11 +73,13 @@ app.get('/player', function (req,res) {
   });
 });
 
+
 app.get('/allplayers', function (req,res) {
-  axios.get(`https://api.mysportsfeeds.com/v1.2/pull/nba/2017-2018-regular/cumulative_player_stats.json?playerstats`, authorization).then((response) => {
+  axios.get(`https://api.mysportsfeeds.com/v1.1/pull/nba/2017-2018-regular/cumulative_player_stats.json?playerstats`, authorization).then((response) => {
   const organizePlayerData = (data) => {
-    return data.cumulativeplayerstats.playerstatsentry.filter(player => {return player.player.JerseyNumber !== undefined}).map(player => {
+    return data.cumulativeplayerstats.playerstatsentry.filter(player => player.player.JerseyNumber !== undefined).map(player => {
       return {
+        'ID': player.player['ID'] || '0',
         'TEAM': player.team.Abbreviation || '-',
         'FN': player.player.FirstName.toLowerCase() || '-',
         'LN': player.player.LastName.toLowerCase() || '-',	
@@ -104,6 +106,7 @@ app.get('/allplayers', function (req,res) {
       }
     });
   }
+  
   res.send(organizePlayerData(response.data).sort((a, b) => {
     if (a['PTS/G'] < b['PTS/G']) {
       return 1;

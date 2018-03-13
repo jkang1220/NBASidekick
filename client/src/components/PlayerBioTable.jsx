@@ -33,10 +33,10 @@ class PlayerBioTable extends Component {
         showRowHover: true,
         selectable: true,
         enableSelectAll: false,
-        deselectOnClickaway: true,
+        deselectOnClickaway: false,
         showCheckboxes: false,
         height: '750px',
-        width: '20%', 
+        width: 'auto', 
       }
     }
   

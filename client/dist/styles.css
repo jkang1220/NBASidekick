@@ -2,7 +2,7 @@ body {
   background-color: #dddddd;
 }
 
-h3 {
+.seasonHeader {
   color: black;
   background-color: #aaaaaa;
   font-size:30px;
@@ -11,6 +11,9 @@ h3 {
 }
 .center {
   width:90%;
+  display:block;
+  margin-left : auto;
+  margin-top : auto;
   margin:0 auto;
 }
 

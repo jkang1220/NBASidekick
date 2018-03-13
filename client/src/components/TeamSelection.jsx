@@ -13,18 +13,23 @@ const styles = {
   },
   gridList: {
     width: 1400,
-    height: 700,
+    height: '100%',
+    marginTop: 'auto',
+    marginBottom: 'auto',
     padding: 10,
     overflowY: 'auto'
   },
 };
 
 const paperStyle = {
-  width: 1200,
-  pardding: 10,
+  width: '100%',
+  height: '100%',
+  padding: 10,
+  marginLeft : 'auto',
+	marginRight :'auto',
   background: 'white',
   textAlign: 'center',
-  display: 'inline-block',
+  display: 'block',
 };
 
 const directButton = {
@@ -51,7 +56,6 @@ class TeamSelection extends React.Component {
 
   render() {
     return(
-    <div className ='center'>
       <Paper style={paperStyle} zDepth={2}>
       <div className = 'container'>
         <h1 id = "appName">NBA Sidekick</h1>
@@ -76,8 +80,7 @@ class TeamSelection extends React.Component {
           ))}
         </GridList>
       </div>
-      </Paper>
-    </div>)
+      </Paper>)
 };
 }
 

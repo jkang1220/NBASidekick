@@ -38,11 +38,13 @@ const selectFieldStyle = {
 };
 const spdPaperStyle = {
 	height: '90%',
-	width: '100%',
+	width: '95%',
 	padding: 10,
 	background: 'white',
 	textAlign: 'center',
-	display: 'inline-block',
+	marginLeft: 'auto',
+	marginRight: 'auto',
+	display: 'block',
 };
 
 const tableCell = {
@@ -118,12 +120,12 @@ class AllPlayersDisplay extends React.Component {
 			allPlayers: [],
 			filteredPlayers: [],
 			expandFilters: false,
-			TEAM: [0, 'Any Team'],
+			TEAM: [0, 'All Teams'],
 			FIRST: '',
 			LAST: '',
 			GP: '',
 			NUM: '',
-			POS: [0, 'All'],
+			POS: [0, 'All Positions'],
 			'MIN/G': '',
 			'PTS/G': '',
 			'2PA/G': '',
@@ -150,13 +152,13 @@ class AllPlayersDisplay extends React.Component {
 		this.handleApplyFilters = this.handleApplyFilters.bind(this);
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		axios
 			.get('/allplayers')
 			.then(response => {
 				this.setState({ allPlayers: response.data }, () => {
 					this.setState({
-						filteredPlayers: this.state.allPlayers.slice(0, 100),
+						filteredPlayers: this.state.allPlayers.slice(0,100),
 					});
 				});
 			})
@@ -232,7 +234,7 @@ class AllPlayersDisplay extends React.Component {
 
 	handleRemoveFilters() {
 		this.setState({
-			filteredPlayers: this.state.allPlayers.slice(0, 100),
+			filteredPlayers: this.state.allPlayers,
 			TEAM: [0, 'Any Team'],
 			FIRST: '',
 			LAST: '',
@@ -259,16 +261,16 @@ class AllPlayersDisplay extends React.Component {
 		});
 	}
 
+
 	render() {
 		return (
-			<div className="center">
 				<Paper style={spdPaperStyle}>
 					<div className="container">
 						<h1 id="appName">All Players</h1>
 						<RaisedButton
 							style={directButton}
 							label="Return to Team Selection"
-							containerElement={<Link to="/" />}
+							containerElement={<Link to="/"/>}
 						/>
 					</div>
 					<div style={{ height: 'auto', width: '100%' }}>
@@ -278,13 +280,24 @@ class AllPlayersDisplay extends React.Component {
 									toggled={this.state.expandFilters}
 									onToggle={this.handleToggle}
 									labelPosition="left"
-									label="Show Filter Options"
+									label="Player Filter Options"
 								/>
 							</CardText>
 							<CardText expandable={true}>
 								<div>
 									<div>
-									<h4>Team</h4>
+										<h1>Quick Filter Guide</h1>
+										<p style={{fontSize:'15px'}}><b>1. First Name and Last Name fields will find names with that include the characters you entered.</b>
+										<br />
+										<b>2. All other numeric fields can accept 3 types of input:</b>
+										<br />
+											"&gt; 8"   - This will return all players that have the stat value greater than 8
+											<br />
+											"&lt; 8"   - This will return all players that have the stat value less than 8
+											<br />
+											"between 7 and 9" - This will return all players that have the stat value between 7 and 9 inclusively
+										</p>
+									<h3>Team</h3>
 										<SelectField
 											name="TEAM"
 											floatingLabelText="Team"
@@ -295,6 +308,7 @@ class AllPlayersDisplay extends React.Component {
 											<MenuItem value={0} primaryText="Any Team" />
 											{this.state.allTeams.map((team, i) =>
 												<MenuItem
+													key={i}
 													value={i + 1}
 													primaryText={team.abbreviation}
 												/>
@@ -309,12 +323,12 @@ class AllPlayersDisplay extends React.Component {
 										>
 											<MenuItem value={0} primaryText="All" />
 											{['PG', 'SG', 'SF', 'PF', 'C'].map((position, i) =>
-												<MenuItem value={i + 1} primaryText={position} />
+												<MenuItem key={i} value={i + 1} primaryText={position} />
 											)}
 										</SelectField>
 									</div>
 									<div>
-									<h4>Player Info</h4>
+									<h3>Player Info</h3>
 										<TextField
 											name="FIRST"
 											value={this.state['FIRST']}
@@ -346,7 +360,7 @@ class AllPlayersDisplay extends React.Component {
 								</div>
 								<div>
 									<div>
-									<h4>Basic Stats</h4>
+									<h3>Basic Stats</h3>
 										<TextField
 											name="PTS/G"
 											value={this.state['PTS/G']}
@@ -396,7 +410,7 @@ class AllPlayersDisplay extends React.Component {
 								</div>
 								<div>
 									<div>
-									<h4>Field Goals</h4>
+									<h3>Field Goals</h3>
 										<TextField
 											name="2PA/G"
 											value={this.state['2PA/G']}
@@ -454,13 +468,13 @@ class AllPlayersDisplay extends React.Component {
 									</div>
 								</div>
 								<div>
-									<h4>Percentages</h4>
+									<h3>Percentages</h3>
 									<TextField
 										name="2PT%"
 										value={this.state['2PT%']}
 										onChange={this.onFilterParameterChange}
 										hintText="Example: > 30"
-										floatingLabelText="2 Pt FG %"
+										floatingLabelText="2 Pt Field Goal %"
 										floatingLabelFixed={true}
 										style={filterFields}
 									/>
@@ -485,7 +499,7 @@ class AllPlayersDisplay extends React.Component {
 								</div>
 								<div>
 									<div>
-									<h4>Miscellaneous</h4>
+									<h3>Miscellaneous</h3>
 										<TextField
 											name="GP"
 											value={this.state['GP']}
@@ -543,11 +557,10 @@ class AllPlayersDisplay extends React.Component {
 					</div>
 
 					<PlayersTable
-						allPlayers={this.state.allPlayers}
-						filteredPlayers={this.state.filteredPlayers}
+						allPlayers = {this.state.allPlayers}
+						filteredPlayers = {this.state.filteredPlayers}
 					/>
 				</Paper>
-			</div>
 		);
 	}
 }

@@ -7,7 +7,9 @@ import ActionHome from 'material-ui/svg-icons/action/home';
 import TextField from 'material-ui/TextField';
 import DownArrow from 'material-ui/svg-icons/navigation/arrow-drop-down';
 import RaisedButton from 'material-ui/RaisedButton';
+import Dialog from 'material-ui/Dialog';
 import UpArrow from 'material-ui/svg-icons/navigation/arrow-drop-up';
+import SinglePlayerDisplay from './SinglePlayerDisplay.jsx';
 import SelectField from 'material-ui/SelectField';
 import {
 	Card,
@@ -38,10 +40,20 @@ const filterFields = {
 	width: '210px',
 };
 
+const customContentStyle = {
+	width: '90%',
+	height: '100%',
+	maxWidth: 'none'
+	// marginLeft: 'auto',
+	// marginRight: 'auto'
+};
+
 const spdPaperStyle = {
 	height: '90%',
 	width: '100%',
 	padding: 10,
+	marginLeft: 'auto',
+	marginRight: 'auto',
 	background: 'white',
 	textAlign: 'center',
 	display: 'inline-block',
@@ -83,18 +95,30 @@ class PlayersTable extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			filteredPlayers: this.props.filteredPlayers,
+			filteredPlayers: props.filteredPlayers,
 			columnToSort: '',
 			sortDirection: 'asc',
-			initialRender: true
+			initialRender: true,
+			open: false,
+			selectedPlayer: '',
 		};
 		this.filterTable = this.filterTable.bind(this);
+		this.handleClose = this.handleClose.bind(this);
+		this.handleRowSelection = this.handleRowSelection.bind(this);
 	}
 
+	componentWillReceiveProps(nextProps) {
+		console.log('nextProps', nextProps);
+		this.setState({filteredPlayers: nextProps.filteredPlayers})
+	}
 
 	filterTable(category) {
-		console.log(typeof category , category);
-		if (category === 'TEAM' || category === 'FIRST' || category === 'LAST' || category === 'POS') {
+		if (
+			category === 'TEAM' ||
+			category === 'FIRST' ||
+			category === 'LAST' ||
+			category === 'POS'
+		) {
 			this.setState(
 				{
 					columnToSort: category,
@@ -169,15 +193,53 @@ class PlayersTable extends React.Component {
 		}
 	}
 
+	handleRowSelection(index) {
+		this.setState({
+			open: true,
+			filteredPlayers: this.props.filteredPlayers,
+			selectedPlayer: this.props.filteredPlayers[index]
+		},
+			() => {
+				console.log('state after row selection', this.state);
+			}
+		);
+	}
+
+	handleClose() {
+		this.setState({ open: false });
+	}
+
 	render() {
-		if (this.props.filteredPlayers && this.props.filteredPlayers.length > 0 && this.props.filteredPlayers !== 'No Results') {
+		const actions = [
+			<FlatButton label="Close" primary={true} onClick={this.handleClose} />,
+		];
+
+		if (
+			this.props.filteredPlayers &&
+			this.props.filteredPlayers.length > 0 &&
+			this.props.filteredPlayers !== 'No Results'
+		) {
 			return (
 				<div>
+					<Dialog
+						actions={actions}
+						modal={true}
+						contentStyle={customContentStyle}
+						autoScrollBodyContent={true}
+						open={this.state.open}
+					>
+						<SinglePlayerDisplay
+							playerID={this.state.selectedPlayer['ID']}
+							teamName={this.state.selectedPlayer['TEAM']}
+							showReturnTeamButton={false}
+						/>
+					</Dialog>
 					<Table
 						height={'700px'}
 						width={'100%'}
 						fixedHeader={true}
 						selectable={true}
+						onRowSelection={this.handleRowSelection}
 					>
 						<TableHeader displaySelectAll={false} adjustForCheckbox={false}>
 							<TableRow
@@ -511,7 +573,7 @@ class PlayersTable extends React.Component {
 						</TableHeader>
 						<TableBody
 							displayRowCheckbox={false}
-							deselectOnClickaway={true}
+							deselectOnClickaway={false}
 							preScanRows={false}
 							showRowHover={true}
 							stripedRows={true}
@@ -594,7 +656,12 @@ class PlayersTable extends React.Component {
 				</div>
 			);
 		} else if (this.props.filteredPlayers === 'No Results') {
-      return (<h3>No Players Found, Please update your filter parameters and select Apply Filters again</h3>)
+			return (
+				<h3 className="seasonHeader">
+					No Players Found, Please update your filter parameters and select
+					Apply Filters again
+				</h3>
+			);
 		} else {
 			return (
 				<Paper style={spdPaperStyle}>
