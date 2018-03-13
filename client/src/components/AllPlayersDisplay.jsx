@@ -148,7 +148,9 @@ class AllPlayersDisplay extends React.Component {
 		this.handleRemoveFilters = this.handleRemoveFilters.bind(this);
 		this.handleToggle = this.handleToggle.bind(this);
 		this.onTeamSelectFieldChange = this.onTeamSelectFieldChange.bind(this);
-		this.onPositionSelectFieldChange = this.onPositionSelectFieldChange.bind(this);
+		this.onPositionSelectFieldChange = this.onPositionSelectFieldChange.bind(
+			this
+		);
 		this.handleApplyFilters = this.handleApplyFilters.bind(this);
 	}
 
@@ -318,7 +320,7 @@ class AllPlayersDisplay extends React.Component {
 
 	handleRemoveFilters() {
 		this.setState({
-			filteredPlayers: this.state.allPlayers.slice(0,50),
+			filteredPlayers: this.state.allPlayers.slice(0, 50),
 			TEAM: [0, 'Any Team'],
 			FIRST: '',
 			LAST: '',
@@ -372,23 +374,37 @@ class AllPlayersDisplay extends React.Component {
 									<h1>Quick Filter Guide</h1>
 									<p style={{ fontSize: '18px' }}>
 										<b>
-											All fields except First Name, Last Name, and  can accept 3 types of input:
+											All fields except Team, Position, First Name, and Last Name can accept 3
+											types of input. Here are examples:
 										</b>
 										<br />
-										<span style={{ fontSize: '15px' }}><b><i>"&gt; 8"</i></b> - Returns all players that have the stat value
-										greater than 8</span>
+										<span style={{ fontSize: '15px' }}>
+											<b><i>"&gt; 30"</i></b> - Returns all players that have the
+											stat value
+											greater than 30
+										</span>
 										<br />
-										<span style={{ fontSize: '15px' }}><b><i>"&lt; 8"</i></b> - Returns all players that have the stat value less
-										than 8</span>
+										<span style={{ fontSize: '15px' }}>
+											<b><i>"&lt; 6.5"</i></b> - Returns all players that have the
+											stat value less
+											than 6.5
+										</span>
 										<br />
-										"between 7 and 9" - Return all players that have
-										the stat value between 7 and 9 inclusively
+										<span style={{ fontSize: '15px' }}>
+											<b><i>"between 7 and 9"</i></b> - Return all players that
+											have
+											the stat value between 7 and 9 inclusively
+										</span>
 										<br />
-										<b>
-											*Note: Search Results will only show up to 50 players. By
-											Default it will show the top 50 players in desc Points Per
-											Game
-										</b>
+										<span style={{ fontSize: '13px' }}>
+											<i>
+												*Note: Search Results will only show up to 50 players.
+												By
+												Default it will show the top 50 players in desc Points
+												Per
+												Game
+											</i>
+										</span>
 									</p>
 									<h3>Team</h3>
 									<SelectField
