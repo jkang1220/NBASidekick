@@ -110,7 +110,7 @@ const convertQueryIntoFilters = (filteredDataArr, query, stat) => {
 			? filteredDataArr.filter(player => player[stat] < number)
 			: filteredDataArr.filter(player => player[stat] > number);
 	}
-}
+};
 
 class AllPlayersDisplay extends React.Component {
 	constructor(props) {
@@ -148,7 +148,9 @@ class AllPlayersDisplay extends React.Component {
 		this.handleRemoveFilters = this.handleRemoveFilters.bind(this);
 		this.handleToggle = this.handleToggle.bind(this);
 		this.onTeamSelectFieldChange = this.onTeamSelectFieldChange.bind(this);
-		this.onPositionSelectFieldChange = this.onPositionSelectFieldChange.bind(this);
+		this.onPositionSelectFieldChange = this.onPositionSelectFieldChange.bind(
+			this
+		);
 		this.handleApplyFilters = this.handleApplyFilters.bind(this);
 	}
 
@@ -158,7 +160,7 @@ class AllPlayersDisplay extends React.Component {
 			.then(response => {
 				this.setState({ allPlayers: response.data }, () => {
 					this.setState({
-						filteredPlayers: this.state.allPlayers.slice(0,50),
+						filteredPlayers: this.state.allPlayers.slice(0, 50),
 					});
 				});
 			})
@@ -172,69 +174,153 @@ class AllPlayersDisplay extends React.Component {
 	}
 
 	onFilterParameterChange(event) {
-		this.setState({[event.target.name]: event.target.value});
+		this.setState({ [event.target.name]: event.target.value });
 	}
 
 	onTeamSelectFieldChange(event, index, value) {
-		this.setState({TEAM:[value, event.target.innerText]});
+		this.setState({ TEAM: [value, event.target.innerText] });
 	}
 
 	onPositionSelectFieldChange(event, index, value) {
-		this.setState({POS:[value, event.target.innerText]});
+		this.setState({ POS: [value, event.target.innerText] });
 	}
 
 	handleToggle(event, toggle) {
-		this.setState({expandFilters: toggle });
+		this.setState({ expandFilters: toggle });
 	}
 
 	handleApplyFilters() {
-		var filteredPlayers = this.state.allPlayers
+		var filteredPlayers = this.state.allPlayers;
 		if (this.state.TEAM[0] > 0) {
 			let teamAbbrev = this.state.TEAM[1];
-			 filteredPlayers = this.state.allPlayers.filter(player => (player.TEAM === teamAbbrev))
+			filteredPlayers = this.state.allPlayers.filter(
+				player => player.TEAM === teamAbbrev
+			);
 		}
 		if (this.state.POS[0] > 0) {
 			let position = this.state.POS[1];
-			filteredPlayers = filteredPlayers.filter(player => (player.POS === position))
+			filteredPlayers = filteredPlayers.filter(
+				player => player.POS === position
+			);
 		}
 		if (this.state.FIRST.length > 0) {
 			let firstname = this.state.FIRST;
-			filteredPlayers = filteredPlayers.filter(player => player.FN.toLowerCase().includes(firstname.toLowerCase()))
+			filteredPlayers = filteredPlayers.filter(player =>
+				player.FN.toLowerCase().includes(firstname.toLowerCase())
+			);
 		}
 		if (this.state.LAST.length > 0) {
 			let lastname = this.state.LAST;
-			filteredPlayers = filteredPlayers.filter(player => player.LN.toLowerCase().includes(lastname.toLowerCase()))
+			filteredPlayers = filteredPlayers.filter(player =>
+				player.LN.toLowerCase().includes(lastname.toLowerCase())
+			);
 		}
 
-			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state.GP, 'GP');
-			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state.NUM, 'NUM');
-			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state['MIN/G'], 'MIN/G');
-			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state['PTS/G'], 'PTS/G');
-			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state['2PA/G'], '2PA/G');
-			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state['2PM/G'], '2PM/G');
-			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state['2PT%'], '2PT%');
-			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state['3PA/G'], '3PA/G');
-			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state['3PM/G'], '3PM/G');
-			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state['3PT%'], '3PT%');
-			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state['FTA/G'], 'FTA/G');
-			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state['FTM/G'], 'FTM/G');
-			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state['FT%'], 'FT%');
-			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state['REB/G'], 'REB/G');
-			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state['AST/G'], 'AST/G');
-			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state['STL/G'], 'STL/G');
-			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state['BLK/G'], 'BLK/G');
-			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state['TO/G'], 'TO/G');
-			filteredPlayers = convertQueryIntoFilters(filteredPlayers, this.state['SLRY'], 'SLRY');
-			if(filteredPlayers.length > 0) {
-				this.setState({filteredPlayers:filteredPlayers})
-			}else{
-        this.setState({filteredPlayers: 'No Results'})
-			}
+		filteredPlayers = convertQueryIntoFilters(
+			filteredPlayers,
+			this.state.GP,
+			'GP'
+		);
+		filteredPlayers = convertQueryIntoFilters(
+			filteredPlayers,
+			this.state.NUM,
+			'NUM'
+		);
+		filteredPlayers = convertQueryIntoFilters(
+			filteredPlayers,
+			this.state['MIN/G'],
+			'MIN/G'
+		);
+		filteredPlayers = convertQueryIntoFilters(
+			filteredPlayers,
+			this.state['PTS/G'],
+			'PTS/G'
+		);
+		filteredPlayers = convertQueryIntoFilters(
+			filteredPlayers,
+			this.state['2PA/G'],
+			'2PA/G'
+		);
+		filteredPlayers = convertQueryIntoFilters(
+			filteredPlayers,
+			this.state['2PM/G'],
+			'2PM/G'
+		);
+		filteredPlayers = convertQueryIntoFilters(
+			filteredPlayers,
+			this.state['2PT%'],
+			'2PT%'
+		);
+		filteredPlayers = convertQueryIntoFilters(
+			filteredPlayers,
+			this.state['3PA/G'],
+			'3PA/G'
+		);
+		filteredPlayers = convertQueryIntoFilters(
+			filteredPlayers,
+			this.state['3PM/G'],
+			'3PM/G'
+		);
+		filteredPlayers = convertQueryIntoFilters(
+			filteredPlayers,
+			this.state['3PT%'],
+			'3PT%'
+		);
+		filteredPlayers = convertQueryIntoFilters(
+			filteredPlayers,
+			this.state['FTA/G'],
+			'FTA/G'
+		);
+		filteredPlayers = convertQueryIntoFilters(
+			filteredPlayers,
+			this.state['FTM/G'],
+			'FTM/G'
+		);
+		filteredPlayers = convertQueryIntoFilters(
+			filteredPlayers,
+			this.state['FT%'],
+			'FT%'
+		);
+		filteredPlayers = convertQueryIntoFilters(
+			filteredPlayers,
+			this.state['REB/G'],
+			'REB/G'
+		);
+		filteredPlayers = convertQueryIntoFilters(
+			filteredPlayers,
+			this.state['AST/G'],
+			'AST/G'
+		);
+		filteredPlayers = convertQueryIntoFilters(
+			filteredPlayers,
+			this.state['STL/G'],
+			'STL/G'
+		);
+		filteredPlayers = convertQueryIntoFilters(
+			filteredPlayers,
+			this.state['BLK/G'],
+			'BLK/G'
+		);
+		filteredPlayers = convertQueryIntoFilters(
+			filteredPlayers,
+			this.state['TO/G'],
+			'TO/G'
+		);
+		filteredPlayers = convertQueryIntoFilters(
+			filteredPlayers,
+			this.state['SLRY'],
+			'SLRY'
+		);
+		if (filteredPlayers.length > 0) {
+			this.setState({ filteredPlayers: filteredPlayers });
+		} else {
+			this.setState({ filteredPlayers: 'No Results' });
+		}
 	}
 
 	handleRemoveFilters() {
 		this.setState({
-			filteredPlayers: this.state.allPlayers,
+			filteredPlayers: this.state.allPlayers.slice(0,50),
 			TEAM: [0, 'Any Team'],
 			FIRST: '',
 			LAST: '',
@@ -261,310 +347,330 @@ class AllPlayersDisplay extends React.Component {
 		});
 	}
 
-
 	render() {
 		return (
-				<Paper style={spdPaperStyle}>
-					<div className="container">
-						<h1 id="appName">All Players</h1>
-						<RaisedButton
-							style={directButton}
-							label="Return to Team Selection"
-							containerElement={<Link to="/"/>}
-						/>
-					</div>
-					<div style={{ height: 'auto', width: '100%' }}>
-						<Card expanded={this.state.expandFilters}>
-							<CardText>
-								<Toggle
-									toggled={this.state.expandFilters}
-									onToggle={this.handleToggle}
-									labelPosition="left"
-									label="Player Filter Options"
-								/>
-							</CardText>
-							<CardText expandable={true}>
+			<Paper style={spdPaperStyle}>
+				<div className="container">
+					<h1 id="appName">All Players</h1>
+					<RaisedButton
+						style={directButton}
+						label="Return to Team Selection"
+						containerElement={<Link to="/" />}
+					/>
+				</div>
+				<div style={{ height: 'auto', width: '100%' }}>
+					<Card expanded={this.state.expandFilters}>
+						<CardText>
+							<Toggle
+								toggled={this.state.expandFilters}
+								onToggle={this.handleToggle}
+								labelPosition="left"
+								label="Player Filter Options"
+							/>
+						</CardText>
+						<CardText expandable={true}>
+							<div>
 								<div>
-									<div>
-										<h1>Quick Filter Guide</h1>
-										<p style={{fontSize:'15px'}}><b>1. First Name and Last Name fields will retrieve names that contain the characters you entered.</b>
+									<h1>Quick Filter Guide</h1>
+									<p style={{ fontSize: '15px' }}>
+										<b>
+											1. First Name and Last Name fields will retrieve names
+											that contain the characters you entered.
+										</b>
 										<br />
-										<b>2. All other numeric fields can accept 3 types of input:</b>
+										<b>
+											2. All other numeric fields can accept 3 types of input:
+										</b>
 										<br />
-											"&gt; 8"   - Returns all players that have the stat value greater than 8
-											<br />
-											"&lt; 8"   - Returns all players that have the stat value less than 8
-											<br />
-											"between 7 and 9" - This will return all players that have the stat value between 7 and 9 inclusively
-											<br />
-											<b>3. Search Results will only show up to 50 players. By Default it will show the top 50 players in desc Points Per Game</b>
-											<b>4. Clicking on a column header will sort the player records in ascending/descending order</b>
-											<b>5. Clicking a player row will show a modal with the Single Player Display</b>
-										</p>
+										"&gt; 8" - Returns all players that have the stat value
+										greater than 8
+										<br />
+										"&lt; 8" - Returns all players that have the stat value less
+										than 8
+										<br />
+										"between 7 and 9" - This will return all players that have
+										the stat value between 7 and 9 inclusively
+										<br />
+										<b>
+											3. Search Results will only show up to 50 players. By
+											Default it will show the top 50 players in desc Points Per
+											Game
+										</b>
+										<br />
+										<b>
+											4. Clicking on a column header will sort the player
+											records in ascending/descending order
+										</b>
+										<br />
+										<b>
+											5. Clicking a player row will show a modal with the Single
+											Player Display
+										</b>
+									</p>
 									<h3>Team</h3>
-										<SelectField
-											name="TEAM"
-											floatingLabelText="Team"
-											value={this.state['TEAM'][0]}
-											style={selectFieldStyle}
-											onChange={this.onTeamSelectFieldChange}
-										>
-											<MenuItem value={0} primaryText="Any Team" />
-											{this.state.allTeams.map((team, i) =>
-												<MenuItem
-													key={i}
-													value={i + 1}
-													primaryText={team.abbreviation}
-												/>
-											)}
-										</SelectField>
-										<SelectField
-											name="POS"
-											floatingLabelText="Position"
-											value={this.state['POS'][0]}
-											style={selectFieldStyle}
-											onChange={this.onPositionSelectFieldChange}
-										>
-											<MenuItem value={0} primaryText="All" />
-											{['PG', 'SG', 'SF', 'PF', 'C'].map((position, i) =>
-												<MenuItem key={i} value={i + 1} primaryText={position} />
-											)}
-										</SelectField>
-									</div>
-									<div>
+									<SelectField
+										name="TEAM"
+										floatingLabelText="Team"
+										value={this.state['TEAM'][0]}
+										style={selectFieldStyle}
+										onChange={this.onTeamSelectFieldChange}
+									>
+										<MenuItem value={0} primaryText="Any Team" />
+										{this.state.allTeams.map((team, i) =>
+											<MenuItem
+												key={i}
+												value={i + 1}
+												primaryText={team.abbreviation}
+											/>
+										)}
+									</SelectField>
+									<SelectField
+										name="POS"
+										floatingLabelText="Position"
+										value={this.state['POS'][0]}
+										style={selectFieldStyle}
+										onChange={this.onPositionSelectFieldChange}
+									>
+										<MenuItem value={0} primaryText="All" />
+										{['PG', 'SG', 'SF', 'PF', 'C'].map((position, i) =>
+											<MenuItem key={i} value={i + 1} primaryText={position} />
+										)}
+									</SelectField>
+								</div>
+								<div>
 									<h3>Player Info</h3>
-										<TextField
-											name="FIRST"
-											value={this.state['FIRST']}
-											onChange={this.onFilterParameterChange}
-											hintText="Example: Kyrie"
-											floatingLabelText="First Name"
-											floatingLabelFixed={true}
-											style={filterFields}
-										/>
-										<TextField
-											name="LAST"
-											value={this.state['LAST']}
-											onChange={this.onFilterParameterChange}
-											hintText="Example: Irving"
-											floatingLabelText="Last Name"
-											floatingLabelFixed={true}
-											style={filterFields}
-										/>
-										<TextField
-											name="NUM"
-											value={this.state['NUM']}
-											onChange={this.onFilterParameterChange}
-											hintText="Example: < 8"
-											floatingLabelText="Number"
-											floatingLabelFixed={true}
-											style={filterFields}
-										/>
-									</div>
-								</div>
-								<div>
-									<div>
-									<h3>Basic Stats</h3>
-										<TextField
-											name="PTS/G"
-											value={this.state['PTS/G']}
-											onChange={this.onFilterParameterChange}
-											hintText="Example: > 25"
-											floatingLabelText="Pts Per Game"
-											floatingLabelFixed={true}
-											style={filterFields}
-										/>
-										<TextField
-											name="REB/G"
-											value={this.state['REB/G']}
-											onChange={this.onFilterParameterChange}
-											hintText="Example: > 8.8"
-											floatingLabelText="Rebounds per Game"
-											floatingLabelFixed={true}
-											style={filterFields}
-										/>
-										<TextField
-											name="AST/G"
-											value={this.state['AST/G']}
-											onChange={this.onFilterParameterChange}
-											hintText="Example: > 6.8"
-											floatingLabelText="Assists Per Game"
-											floatingLabelFixed={true}
-											style={filterFields}
-										/>
-										<TextField
-											name="STL/G"
-											value={this.state['STL/G']}
-											onChange={this.onFilterParameterChange}
-											hintText="Example: > 1.1"
-											floatingLabelText="Steals Per Game"
-											floatingLabelFixed={true}
-											style={filterFields}
-										/>
-										<TextField
-											name="BLK/G"
-											value={this.state['BLK/G']}
-											onChange={this.onFilterParameterChange}
-											hintText="Example: > 2"
-											floatingLabelText="Blocks Per Game"
-											floatingLabelFixed={true}
-											style={filterFields}
-										/>
-									</div>
-								</div>
-								<div>
-									<div>
-									<h3>Field Goals</h3>
-										<TextField
-											name="2PA/G"
-											value={this.state['2PA/G']}
-											onChange={this.onFilterParameterChange}
-											hintText="Example: < 10"
-											floatingLabelText="2 Pt FG Att Per Game"
-											floatingLabelFixed={true}
-											style={filterFields}
-										/>
-										<TextField
-											name="2PM/G"
-											value={this.state['2PM/G']}
-											onChange={this.onFilterParameterChange}
-											hintText="Example: > 4"
-											floatingLabelText="2 Pt FG Made Per Game"
-											floatingLabelFixed={true}
-											style={filterFields}
-										/>
-										<TextField
-											name="3PA/G"
-											value={this.state['3PA/G']}
-											onChange={this.onFilterParameterChange}
-											hintText="Example: > 4"
-											floatingLabelText="3 Pt Att Per Game"
-											floatingLabelFixed={true}
-											style={filterFields}
-										/>
-										<TextField
-											name="3PM/G"
-											value={this.state['3PM/G']}
-											onChange={this.onFilterParameterChange}
-											hintText="Example: > 4.2"
-											floatingLabelText="3 Pt Made Per Game"
-											floatingLabelFixed={true}
-											style={filterFields}
-										/>
-										<TextField
-											name="FTA/G"
-											value={this.state['FTA/G']}
-											onChange={this.onFilterParameterChange}
-											hintText="Example: > 6"
-											floatingLabelText="FT Att Per Game"
-											floatingLabelFixed={true}
-											style={filterFields}
-										/>
-										<TextField
-											name="FTM/G"
-											value={this.state['FTM/G']}
-											onChange={this.onFilterParameterChange}
-											hintText="Example: > 5"
-											floatingLabelText="FT Made Per Game"
-											floatingLabelFixed={true}
-											style={filterFields}
-										/>
-									</div>
-								</div>
-								<div>
-									<h3>Percentages</h3>
 									<TextField
-										name="2PT%"
-										value={this.state['2PT%']}
+										name="FIRST"
+										value={this.state['FIRST']}
 										onChange={this.onFilterParameterChange}
-										hintText="Example: > 30"
-										floatingLabelText="2 Pt Field Goal %"
+										hintText="Example: Kyrie"
+										floatingLabelText="First Name"
 										floatingLabelFixed={true}
 										style={filterFields}
 									/>
 									<TextField
-										name="3PT%"
-										value={this.state['3PT%']}
+										name="LAST"
+										value={this.state['LAST']}
+										onChange={this.onFilterParameterChange}
+										hintText="Example: Irving"
+										floatingLabelText="Last Name"
+										floatingLabelFixed={true}
+										style={filterFields}
+									/>
+									<TextField
+										name="NUM"
+										value={this.state['NUM']}
+										onChange={this.onFilterParameterChange}
+										hintText="Example: < 8"
+										floatingLabelText="Number"
+										floatingLabelFixed={true}
+										style={filterFields}
+									/>
+								</div>
+							</div>
+							<div>
+								<div>
+									<h3>Basic Stats</h3>
+									<TextField
+										name="PTS/G"
+										value={this.state['PTS/G']}
+										onChange={this.onFilterParameterChange}
+										hintText="Example: > 25"
+										floatingLabelText="Pts Per Game"
+										floatingLabelFixed={true}
+										style={filterFields}
+									/>
+									<TextField
+										name="REB/G"
+										value={this.state['REB/G']}
+										onChange={this.onFilterParameterChange}
+										hintText="Example: > 8.8"
+										floatingLabelText="Rebounds per Game"
+										floatingLabelFixed={true}
+										style={filterFields}
+									/>
+									<TextField
+										name="AST/G"
+										value={this.state['AST/G']}
+										onChange={this.onFilterParameterChange}
+										hintText="Example: > 6.8"
+										floatingLabelText="Assists Per Game"
+										floatingLabelFixed={true}
+										style={filterFields}
+									/>
+									<TextField
+										name="STL/G"
+										value={this.state['STL/G']}
+										onChange={this.onFilterParameterChange}
+										hintText="Example: > 1.1"
+										floatingLabelText="Steals Per Game"
+										floatingLabelFixed={true}
+										style={filterFields}
+									/>
+									<TextField
+										name="BLK/G"
+										value={this.state['BLK/G']}
+										onChange={this.onFilterParameterChange}
+										hintText="Example: > 2"
+										floatingLabelText="Blocks Per Game"
+										floatingLabelFixed={true}
+										style={filterFields}
+									/>
+								</div>
+							</div>
+							<div>
+								<div>
+									<h3>Field Goals</h3>
+									<TextField
+										name="2PA/G"
+										value={this.state['2PA/G']}
 										onChange={this.onFilterParameterChange}
 										hintText="Example: < 10"
-										floatingLabelText="3 Pt Field Goal %"
+										floatingLabelText="2 Pt FG Att Per Game"
 										floatingLabelFixed={true}
 										style={filterFields}
 									/>
 									<TextField
-										name="FT%"
-										value={this.state['FT%']}
+										name="2PM/G"
+										value={this.state['2PM/G']}
 										onChange={this.onFilterParameterChange}
-										hintText="Example: > 80"
-										floatingLabelText="FT %"
+										hintText="Example: > 4"
+										floatingLabelText="2 Pt FG Made Per Game"
+										floatingLabelFixed={true}
+										style={filterFields}
+									/>
+									<TextField
+										name="3PA/G"
+										value={this.state['3PA/G']}
+										onChange={this.onFilterParameterChange}
+										hintText="Example: > 4"
+										floatingLabelText="3 Pt Att Per Game"
+										floatingLabelFixed={true}
+										style={filterFields}
+									/>
+									<TextField
+										name="3PM/G"
+										value={this.state['3PM/G']}
+										onChange={this.onFilterParameterChange}
+										hintText="Example: > 4.2"
+										floatingLabelText="3 Pt Made Per Game"
+										floatingLabelFixed={true}
+										style={filterFields}
+									/>
+									<TextField
+										name="FTA/G"
+										value={this.state['FTA/G']}
+										onChange={this.onFilterParameterChange}
+										hintText="Example: > 6"
+										floatingLabelText="FT Att Per Game"
+										floatingLabelFixed={true}
+										style={filterFields}
+									/>
+									<TextField
+										name="FTM/G"
+										value={this.state['FTM/G']}
+										onChange={this.onFilterParameterChange}
+										hintText="Example: > 5"
+										floatingLabelText="FT Made Per Game"
 										floatingLabelFixed={true}
 										style={filterFields}
 									/>
 								</div>
+							</div>
+							<div>
+								<h3>Percentages</h3>
+								<TextField
+									name="2PT%"
+									value={this.state['2PT%']}
+									onChange={this.onFilterParameterChange}
+									hintText="Example: > 30"
+									floatingLabelText="2 Pt Field Goal %"
+									floatingLabelFixed={true}
+									style={filterFields}
+								/>
+								<TextField
+									name="3PT%"
+									value={this.state['3PT%']}
+									onChange={this.onFilterParameterChange}
+									hintText="Example: < 10"
+									floatingLabelText="3 Pt Field Goal %"
+									floatingLabelFixed={true}
+									style={filterFields}
+								/>
+								<TextField
+									name="FT%"
+									value={this.state['FT%']}
+									onChange={this.onFilterParameterChange}
+									hintText="Example: > 80"
+									floatingLabelText="FT %"
+									floatingLabelFixed={true}
+									style={filterFields}
+								/>
+							</div>
+							<div>
 								<div>
-									<div>
 									<h3>Miscellaneous</h3>
-										<TextField
-											name="GP"
-											value={this.state['GP']}
-											onChange={this.onFilterParameterChange}
-											hintText="Example: > 60"
-											floatingLabelText="Games Played"
-											floatingLabelFixed={true}
-											style={filterFields}
-										/>
-										<TextField
-											name="MIN/G"
-											value={this.state['MIN/G']}
-											onChange={this.onFilterParameterChange}
-											hintText="Example: > 30"
-											floatingLabelText="Minutes Per Game"
-											floatingLabelFixed={true}
-											style={filterFields}
-										/>
-										<TextField
-											name="TO/G"
-											value={this.state['TO/G']}
-											onChange={this.onFilterParameterChange}
-											hintText="Example: < 4"
-											floatingLabelText="Turnovers Per Game"
-											floatingLabelFixed={true}
-											style={filterFields}
-										/>
-										<TextField
-											name="SLRY"
-											value={this.state['SLRY']}
-											onChange={this.onFilterParameterChange}
-											hintText="Example: < 10000000"
-											floatingLabelText="Salary Per Year"
-											floatingLabelFixed={true}
-											style={filterFields}
-										/>
-									</div>
-								</div>
-								<div>
-									<RaisedButton
-										style={{ width: '200px', margin: '15px 0' }}
-										label="Apply Filters"
-										primary={true}
-										onClick={this.handleApplyFilters}
+									<TextField
+										name="GP"
+										value={this.state['GP']}
+										onChange={this.onFilterParameterChange}
+										hintText="Example: > 60"
+										floatingLabelText="Games Played"
+										floatingLabelFixed={true}
+										style={filterFields}
 									/>
-									<RaisedButton
-										style={{ width: '200px', margin: '15px 15px' }}
-										label="Remove Filters"
-										primary={true}
-										onClick={this.handleRemoveFilters}
+									<TextField
+										name="MIN/G"
+										value={this.state['MIN/G']}
+										onChange={this.onFilterParameterChange}
+										hintText="Example: > 30"
+										floatingLabelText="Minutes Per Game"
+										floatingLabelFixed={true}
+										style={filterFields}
+									/>
+									<TextField
+										name="TO/G"
+										value={this.state['TO/G']}
+										onChange={this.onFilterParameterChange}
+										hintText="Example: < 4"
+										floatingLabelText="Turnovers Per Game"
+										floatingLabelFixed={true}
+										style={filterFields}
+									/>
+									<TextField
+										name="SLRY"
+										value={this.state['SLRY']}
+										onChange={this.onFilterParameterChange}
+										hintText="Example: < 10000000"
+										floatingLabelText="Salary Per Year"
+										floatingLabelFixed={true}
+										style={filterFields}
 									/>
 								</div>
-							</CardText>
-						</Card>
-					</div>
+							</div>
+							<div>
+								<RaisedButton
+									style={{ width: '200px', margin: '15px 0' }}
+									label="Apply Filters"
+									primary={true}
+									onClick={this.handleApplyFilters}
+								/>
+								<RaisedButton
+									style={{ width: '200px', margin: '15px 15px' }}
+									label="Remove Filters"
+									primary={true}
+									onClick={this.handleRemoveFilters}
+								/>
+							</div>
+						</CardText>
+					</Card>
+				</div>
 
-					<PlayersTable
-						allPlayers = {this.state.allPlayers}
-						filteredPlayers = {this.state.filteredPlayers}
-					/>
-				</Paper>
+				<PlayersTable
+					allPlayers={this.state.allPlayers}
+					filteredPlayers={this.state.filteredPlayers}
+				/>
+			</Paper>
 		);
 	}
 }
