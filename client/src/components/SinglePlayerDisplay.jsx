@@ -16,7 +16,7 @@ import PlayerBioTable from '../components/PlayerBioTable.jsx';
 import PlayerBioBox from './PlayerBioBox.jsx';
 
 const spdPaperStyle = {
-	height: 950,
+	height: '1000px',
 	width: '1200px',
 	padding: 10,
 	marginLeft : 'auto',
@@ -171,9 +171,7 @@ class SinglePlayerDisplay extends React.Component {
 	}
 
 	render() {
-		console.log('this.props from SPD', this.props);
 		return (
-			// <div className="center">
 				<Paper style={spdPaperStyle}>
 					<PlayerBioBox
 						teamName={this.props.teamName || this.props.match.params.teamName}
@@ -206,7 +204,6 @@ class SinglePlayerDisplay extends React.Component {
 									</div>}
 					</div>
 				</Paper>
-			// </div>
 		);
 	}
 }

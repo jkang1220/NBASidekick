@@ -148,9 +148,7 @@ class AllPlayersDisplay extends React.Component {
 		this.handleRemoveFilters = this.handleRemoveFilters.bind(this);
 		this.handleToggle = this.handleToggle.bind(this);
 		this.onTeamSelectFieldChange = this.onTeamSelectFieldChange.bind(this);
-		this.onPositionSelectFieldChange = this.onPositionSelectFieldChange.bind(
-			this
-		);
+		this.onPositionSelectFieldChange = this.onPositionSelectFieldChange.bind(this);
 		this.handleApplyFilters = this.handleApplyFilters.bind(this);
 	}
 
