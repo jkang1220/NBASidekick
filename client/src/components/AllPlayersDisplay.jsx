@@ -365,13 +365,13 @@ class AllPlayersDisplay extends React.Component {
 								toggled={this.state.expandFilters}
 								onToggle={this.handleToggle}
 								labelPosition="left"
-								label="Player Filter Options"
+								label="Player Search Options"
 							/>
 						</CardText>
 						<CardText expandable={true}>
 							<div>
 								<div>
-									<h1>Quick Filter Guide</h1>
+									<h1>Quick Search Guide</h1>
 									<p style={{ fontSize: '18px' }}>
 										<b>
 											All fields except Team, Position, First Name, and Last Name can accept 3
@@ -646,13 +646,13 @@ class AllPlayersDisplay extends React.Component {
 							<div>
 								<RaisedButton
 									style={{ width: '200px', margin: '15px 0' }}
-									label="Apply Filters"
+									label="Search"
 									primary={true}
 									onClick={this.handleApplyFilters}
 								/>
 								<RaisedButton
 									style={{ width: '200px', margin: '15px 15px' }}
-									label="Remove Filters"
+									label="Reset Search"
 									primary={true}
 									onClick={this.handleRemoveFilters}
 								/>
