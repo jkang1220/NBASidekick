@@ -30,7 +30,7 @@ import orderBy from 'lodash/orderBy';
 
 const filterFields = {
 	margin: '0px 10px',
-	width: '210px',
+	width: '220px',
 };
 
 const selectFieldStyle = {
@@ -392,17 +392,13 @@ class AllPlayersDisplay extends React.Component {
 										<br />
 										<span style={{ fontSize: '15px' }}>
 											<b><i>"between 7 and 9"</i></b> - Return all players that
-											have
-											the stat value between 7 and 9 inclusively
+											have the stat value between 7 and 9 inclusively
 										</span>
 										<br />
 										<span style={{ fontSize: '13px' }}>
 											<i>
-												*Note: Search Results will only show up to 50 players.
-												By
-												default it will show the top 50 players in desc Points
-												Per
-												Game
+												*Note: Search results will only show up to 50 players.
+												By default it will show the top 50 players in desc Points Per Game
 											</i>
 										</span>
 									</p>
